@@ -24,11 +24,32 @@
   });
 
   app.post("/newProduct", function (req, res, next) {
-    var x = endpoints.newProductUrl+"/newProduct" ;//+ req.url.toString();
-    console.log("************** newProduct "+x);
-    // console.log("req", req.data);
-    helpers.simpleHttpRequest(x
-     , res, next);
+
+    var options = {
+      url: endpoints.newProductUrl,
+      method: 'POST',
+      json: true,
+      body: req.body
+
+    };
+
+    console.log("Posting new Product:", JSON.stringify(req.body));
+
+    request(options, function(error, response, body) {
+      if (error) {
+        return next(error);
+      }
+      helpers.respondSuccessBody(res, JSON.stringify(body));
+    }.bind({
+      res: res
+    }));
+
+
+    // var x = endpoints.newProductUrl+"/newProduct" ;//+ req.url.toString();
+    // console.log("************** newProduct "+x);
+    // // console.log("req", req.data);
+    // helpers.simpleHttpRequest(x
+    //  , res, next);
   });
 
   app.get("/tags", function(req, res, next) {

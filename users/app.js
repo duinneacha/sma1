@@ -72,12 +72,16 @@ var server = http.createServer(function (request, response) {
             case "/register":
                 var body = '';
                 console.log("user Register ");
+                
                 request.on('data', function (data) {
+                    console.log("The data is: ", data);
                     body += data;
+                    console.log("body", body);
                 });
 
                 request.on('end', function () {
                     var obj = JSON.parse(body);
+                    console.log("JSON.stringify(obj, null, 2)");
                     console.log(JSON.stringify(obj, null, 2));
                     var query = "SELECT * FROM Customer where name='"+obj.name+"'";
                     response.writeHead(200, {

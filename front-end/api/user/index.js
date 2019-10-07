@@ -155,7 +155,7 @@
             if (response.statusCode == 200 &&
                 body != null && body != "") {
                 if (body.error) {
-                    console.log("Error with log in: " + err);
+                    console.log("Error with log in: " + body.error);
                     res.status(500);
                     res.end();
                     return;

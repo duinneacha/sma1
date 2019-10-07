@@ -34,6 +34,110 @@ var server = http.createServer(function (request, response) {
 
             /* TODO */
             case "/newProduct":
+                console.log("AD AD AD POST /newProduct ************************");
+                console.log("AD AD AD POST /newProduct ************************");
+                console.log("AD AD AD POST /newProduct ************************");
+                console.log("AD AD AD POST /newProduct ************************");
+                console.log("AD AD AD POST /newProduct ************************");
+                console.log("AD AD AD POST /newProduct ************************");
+
+                var body = '';
+                // console.log("The request is: ", request);
+                request.on('data', function (data) {
+                    // console.log("data", data);
+                    console.log("The data is: ", data);
+                    body += data;
+                    console.log("body", body);
+                });
+
+                request.on('end', function () {
+                    var obj = JSON.parse(body);
+                    console.log("JSON.stringify(obj, null, 2)");
+                    console.log(JSON.stringify(obj, null, 2));
+                    console.log("AD QUERY");
+                    console.log("AD QUERY");
+                    console.log("AD QUERY");
+                    console.log("AD QUERY");
+                    console.log("AD QUERY");
+                    console.log("AD QUERY");
+                    console.log("AD QUERY");
+                    console.log("AD QUERY");
+                    console.log("AD QUERY");
+                    console.log("AD QUERY");
+                    console.log("AD QUERY");
+                    console.log(obj.name);
+                    console.log(obj.name);
+                    console.log(obj.name);
+                    console.log(obj.name);
+                    console.log(obj.name);
+                    console.log(obj.name);
+                    console.log(obj.name);
+                    console.log(obj.name);
+                    console.log(obj.name);
+                    console.log(obj.name);
+                    console.log(obj.name);
+                    console.log(obj.name);
+                    var query = "SELECT * from Products where name ='"+obj.name+"'";
+                    response.writeHead(200, {
+                        'Access-Control-Allow-Origin': '*'
+                    });
+            
+                    db.query(
+                        query,
+                        [],
+                        function(err, rows) {
+                            console.log("AD IN QUERY YYYYYYYYYYYYYYYYYYYY");
+                            console.log("AD IN QUERY YYYYYYYYYYYYYYYYYYYY");
+                            
+                            if (err) {
+                                console.log("IN ERROR");
+                                response.end("error");
+                                throw err;
+                            }
+                            if (rows!=null && rows.length>0) {
+                                console.log("Product already in database");
+                                response.end('{"error": "2"}');
+                            }
+                            else {
+                                console.log("BEFORE SECOND QUERY");
+                                query = "INSERT INTO Products (name, price, quantity, image)"+
+                                        "VALUES(?, ?, ?, ?)";
+                                db.query(
+                                    query,
+                                    [obj.name, obj.price, obj.quantity, obj.image],
+                                    function(err, result) {
+                                        console.log("IN FUNCTION OF SECOND QUERY");
+                                        console.log("IN FUNCTION OF SECOND QUERY");
+                                        
+                                        if (err) {
+                                            console.log("ERROR");
+                                            console.log("ERROR");
+                                            console.log("ERROR");
+                                            console.log("ERROR");
+                                            console.log("ERROR");
+                                            
+                                            console.log(err);
+                                            // 2 response is an sql error
+                                            response.end('{"error": "3"}');
+                                            throw err;
+                                        }
+                                        console.log("AFTER ERRIR IN SECOND QUERY");
+                                        console.log("AFTER ERRIR IN SECOND QUERY");
+                                        
+                                        theproductid = result.insertId;
+                                        var obj = {
+                                            id: theproductid
+                                        }
+                                        response.end(JSON.stringify(obj));
+
+                                    }
+                                );
+                            }
+
+                        }
+                    );
+
+                });
         
 
 

@@ -271,7 +271,9 @@
                 $("#register").hide();
                 var o={};
                 var a = $('#registerForm').serializeArray();
+                
                 $.each(a, function() {
+
                     if (o[this.name] !== undefined) {
                         if (!o[this.name].push) {
                             o[this.name] = [o[this.name]];
@@ -282,7 +284,7 @@
                     }
                 });
                 var fd =JSON.stringify(o);
-                console.log(fd);
+
                 $.ajax
                 ({
                     type: "POST",
@@ -298,25 +300,38 @@
             });
             $('#newProductForm').on( "submit",function(event) {
 
-                console.log("New Product AD1");5
+                
                 event.preventDefault();
                 $("#newProduct").hide();
-                var fd = $('#newProductForm').serialize();
-                console.log("fd", fd)
-                console.log("Before Post . . .");
-
-                $.post(
-                        "/newProduct",
-                        fd,
-                        function (data) {
-                            console.log("ad data", data);
-                            console.log("In Post . . .");
-                            $('#logonmessage').html(data);
-                        }
-                );
-
-                console.log("After Post . . .");
+                var ofa = {};
+                var fa = $('#newProductForm').serializeArray();
                 
+                $.each(fa, function() {
+                
+                    if (ofa[this.name] !== undefined) {
+                        if (!ofa[this.name].push) {
+                            ofa[this.name] = [ofa[this.name]];
+                        }
+                        ofa[this.name].push(this.value || '');
+                    } else {
+                        ofa[this.name] = this.value || '';
+                    }
+                });
+
+                var fd = JSON.stringify(ofa);
+                
+
+                $.ajax
+                ({
+                    type: "POST",
+                    url: "/newProduct",
+                    contentType: 'application/json',
+                    data: fd,
+                    success: function () {
+                        console.log("PPPPPPPPPPPPPPPPPPPPPoooosssssttttteeedddd!!!!!!!");
+                        getProducts();
+                    }
+                });
 
             });
             getProducts();
@@ -405,7 +420,7 @@
                 <input type="number" name="quantity" value="">
                 <br>
                 Image:<br>
-                <input type="text" name="imagename" value="">
+                <input type="text" name="image" value="">
                 <br>
                 <input type="submit">
             </form>
