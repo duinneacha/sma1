@@ -14,7 +14,16 @@
             clear: left;
             text-align: center;
         }
-
+        #cartTotal {
+            color: green;
+            font-weight: bold;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
+            border: 2px solid black;
+            padding-top: 3px;
+            padding-left: 3px;
+            padding-right: 3px;
+            
+        }
         nav {
             float: left;
             max-width: 160px;
@@ -116,6 +125,10 @@
         }
 
         function addToCart(prodid, fieldname) {
+
+            console.log(fieldname);
+            console.log(prodid);
+
             var num = document.getElementById(fieldname).value;
             var dat = {
                 id: prodid,
@@ -131,7 +144,8 @@
                 data: JSON.stringify(dat),
                 success: function () {
 
-                    alert("Thanks!");
+                    // alert("TThanks!");
+                    console.log("Item added to the cart");
                 }
             });
 
@@ -152,13 +166,52 @@
         }
 
         function deleteCartItem(count) {
-            $.post(
-                    "/delete",
-                    {cnt: count},
-                    function (data) {
 
-                    }
-            );
+            var itemIndexToDelete = JSON.stringify(count);
+            console.log(`In deleteCart with count which is: ${itemIndexToDelete}`);
+            // $.ajax({
+            //     url: `/cart/${count}`,
+            //     type: 'DELETE',
+            //     contentType: 'application/json',
+            //     success: function(result) {
+            //         console.log("Reached the success function");
+            //     }
+
+            // });
+
+            
+            
+            var itemObjectToDelete = {
+                id: itemIndexToDelete
+            }
+
+            $.ajax
+            ({
+                type: "DELETE",
+                url: "/cart/:" + itemIndexToDelete ,
+                contentType: 'application/json',
+                data: JSON.stringify(itemObjectToDelete),
+                success: function () {
+                    console.log(`Reached the Delete Success Function and deleted index ${itemIndexToDelete}`);
+                }
+            });
+
+            // $.post(
+            //         "/delete",
+            //         {cnt: count},
+            //         function (data) {
+
+            //         }
+            // );
+
+
+            // $.post(
+            //         "/delete",
+            //         {cnt: count},
+            //         function (data) {
+
+            //         }
+            // );
 
         }
 
@@ -185,7 +238,7 @@
                 out += '">' + '</td>';
 
                 out += '<td> <button onclick="addToCart(' + products[i].productID;
-                out += ",'quant" + i + "')" + '">Buy</button></td>';
+                out += ",'quant" + i + "')" + '">Buay</button></td>';
                 out += "</tr>";
             }
             out += "</table>";
@@ -217,7 +270,7 @@
             }
             out += "</table>";
             out += "<br>";
-            out += "Total: "+total +'<br>';
+            out += "<span id='cartTotal'> Total: "+total +'</span><br>';
             out += '<button onclick="checkout()">Checkout</button><br>';
             out+='<div id="cartmessage"></div>';
             document.getElementById(name).innerHTML = out;

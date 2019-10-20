@@ -62,12 +62,16 @@
         return next(error);
       }
       console.log('User cart deleted with status: ' + response.statusCode);
-      helpers.respondStatus(res, response.statusCode);
+      helpers.respondStatus(res, response.statusCode, body);
     });
   });
 
   // Delete item from cart
   app.delete("/cart/:id", function (req, res, next) {
+
+    console.log("AD DELETE AD");
+
+    console.log("The body is : ", req.body);
     if (req.params.id == null) {
       return next(new Error("Must pass id of item to delete"), 400);
     }
@@ -75,22 +79,35 @@
     console.log("Delete item from cart: " + req.url);
 
     var custId = helpers.getCustomerId(req, app.get("env"));
+    var cartID = req.params.id;
+
+    console.log("Customer ID is: ", custId);
+    console.log("Product ID is: ", cartID);
 
     var options = {
-      uri: endpoints.cartsUrl + "/" + custId + "/items/" + req.params.id.toString(),
+      uri: endpoints.cartsUrl + "/cart/:" + custId + "/items/" + custId,
+      // uri: `${endpoints.cartsUrl}/${custId}/items/${cartId}`,
       method: 'DELETE'
     };
     request(options, function (error, response, body) {
       if (error) {
         return next(error);
       }
-      console.log('Item deleted with status: ' + response.statusCode);
-      helpers.respondStatus(res, response.statusCode);
+      console.log('Ittttem deleted with status: ' + response.statusCode);
+      helpers.respondStatus(res, response.statusCode, body);
     });
   });
 
   // Add new item to cart
   app.post("/cart", function (req, res, next) {
+    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
+    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
+    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
+    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
+    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
+    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
+    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
+    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
     console.log("Attempting to add to cart: " + JSON.stringify(req.body));
 
     if (req.body.id == null) {

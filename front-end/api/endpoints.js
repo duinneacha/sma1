@@ -2,9 +2,10 @@
   'use strict';
 
   module.exports = {
-   catalogueUrl:  "http://localhost:3002",
+   catalogueUrl:   "http://localhost:3002",
    newProductUrl:  "http://localhost:3002/newProduct",
-    tagsUrl:       "http://localhost:8082/catalogue/tags",
+   tagsUrl:        "http://localhost:8082/catalogue/tags",
+  //  cartItemDelete: "httl://localhost:3003/delete",
   //catalogueUrl:  "http://localhost:8081",
   // tagsUrl:       "http://localhost:8081",
     cartsUrl:      "http://localhost:3003",
