@@ -126,9 +126,6 @@
 
         function addToCart(prodid, fieldname) {
 
-            console.log(fieldname);
-            console.log(prodid);
-
             var num = document.getElementById(fieldname).value;
             var dat = {
                 id: prodid,
@@ -144,15 +141,14 @@
                 data: JSON.stringify(dat),
                 success: function () {
 
-                    // alert("TThanks!");
-                    console.log("Item added to the cart");
+                    alert("Thanks!");
+                    // console.log("Item added to the cart");
                 }
             });
 
 
         }
         function checkout() {
-
 
             $.post(
                     "/checkout",
@@ -167,24 +163,13 @@
 
         function deleteCartItem(count) {
 
+            // Set the item to delete
             var itemIndexToDelete = JSON.stringify(count);
-            console.log(`In deleteCart with count which is: ${itemIndexToDelete}`);
-            // $.ajax({
-            //     url: `/cart/${count}`,
-            //     type: 'DELETE',
-            //     contentType: 'application/json',
-            //     success: function(result) {
-            //         console.log("Reached the success function");
-            //     }
-
-            // });
-
-            
-            
             var itemObjectToDelete = {
                 id: itemIndexToDelete
             }
 
+            // Delete ajax call
             $.ajax
             ({
                 type: "DELETE",
@@ -196,22 +181,8 @@
                 }
             });
 
-            // $.post(
-            //         "/delete",
-            //         {cnt: count},
-            //         function (data) {
-
-            //         }
-            // );
-
-
-            // $.post(
-            //         "/delete",
-            //         {cnt: count},
-            //         function (data) {
-
-            //         }
-            // );
+            // Refresh the cart
+            getCart();
 
         }
 

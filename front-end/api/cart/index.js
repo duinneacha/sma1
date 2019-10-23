@@ -85,7 +85,7 @@
     console.log("Product ID is: ", cartID);
 
     var options = {
-      uri: endpoints.cartsUrl + "/cart/:" + custId + "/items/" + custId,
+      uri: endpoints.cartsUrl + "/cart/:" + custId + "/items/" + cartID,
       // uri: `${endpoints.cartsUrl}/${custId}/items/${cartId}`,
       method: 'DELETE'
     };
@@ -100,15 +100,6 @@
 
   // Add new item to cart
   app.post("/cart", function (req, res, next) {
-    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
-    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
-    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
-    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
-    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
-    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
-    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
-    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
-    console.log("Attempting to add to cart: " + JSON.stringify(req.body));
 
     if (req.body.id == null) {
       next(new Error("Must pass id of item to add"), 400);

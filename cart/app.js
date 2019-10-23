@@ -17,10 +17,6 @@ app.post("/add", function (req, res, next) {
     var obj = req.body;
     console.log("Attempting to add to cart: " + JSON.stringify(req.body));
 
-
-    //  var obj = JSON.parse(body);
-
-    //       console.log('addToCart id '+id)
     var max = 0;
     var ind = 0;
 
@@ -30,16 +26,16 @@ app.post("/add", function (req, res, next) {
         
     var c = cart["" + obj.custId];
 
-    console.log("START OF ADD");
-    console.log("START OF ADD");
-    console.log("START OF ADD");
-    console.log("START OF ADD");
-    console.log(obj.custId);
-    console.table(cart);
-    console.log("START OF ADD");
-    console.log("START OF ADD");
+    // console.log("START OF ADD");
+    // console.log("START OF ADD");
+    // console.log("START OF ADD");
+    // console.log("START OF ADD");
+    // console.log(obj.custId);
+    // console.table(cart);
+    // console.log("START OF ADD");
+    // console.log("START OF ADD");
     
-    console.table(c);
+    // console.table(c);
 
     
     // Find out the next Cart ID Number by traversing the cart array object
@@ -69,73 +65,60 @@ app.post("/add", function (req, res, next) {
     for (adIndex = 0; adIndex < c.length; adIndex++) {
         console.log(`Product ID in Cart: ${c[adIndex].productID}  Product ID in Purchase: ${data.productID}`);
         if (c[adIndex].productID === data.productID) {
-            console.log("*********** WARNING PRODUCT ALREADY IN CART");
+            
+            // Product already in cart here - add to the quantity
+
             var newQty = +c[adIndex].quantity + +data.quantity;
             c[adIndex].quantity = newQty;
             updateExisting = true;
         }
 
     }
+
+    // Add item to cart if not already there
     if (!updateExisting) {
         c.push(data);
     }
     
-
-    console.log("********* The Cart Array  *************")
-    console.table(c);
-
     res.status(201);
-
     res.send("");
 
 
 });
 
-/* toDO */
+// Delete function as per assignment requirement
 app.delete("/cart/:custId/items/:id", function (req, res, next) {
-// app.delete("/cart/:id", function (req, res, next) {
-    
-    console.log("**********************************");
-    console.log(req.params);
-    console.log("**********************************");
-    console.log(req.body);
-    console.log("**********************************");
-    // console.log(req);
-    console.log("**********************************");
+
     var custId = req.params.custId;
-    console.log("getCart" + custId);
+    var cartProdID = req.params.id;
+    var cartItemID = cartProdID.slice(1,2);
 
 
-    console.log('custID ' + custId);
+
+    // Separate the cart items from the customer id
+    var adKey = Object.keys(cart)[0];
+    var adValue = cart[adKey];
 
 
-    console.log(JSON.stringify(cart["" + custId], null, 2));
+    // Delete the item from the cart array
+    var index = 0;
+    for (index = 0; index < adValue.length; index++) {
+        if (adValue[index].cartid == cartItemID) {
+            adValue.splice(index, 1);
+            console.log("deleted");
 
-    // var obj = req.body;
+            console.log("IN adValue");
+            console.log("IN adValue");
+            console.log("IN adValue");
+        }
+    }
 
-    // if (cart["" + obj.custId] === undefined) {
-        // cart["" + obj.custId] = [];
-    // }
+
+
+
     var c = cart["" + req.params.custId];
 
-    console.log("AD DELETE AD AD AD !!!!!");
-    console.log("AD DELETE AD AD AD !!!!!");
-    console.log("AD DELETE AD AD AD !!!!!");
-    console.log("AD DELETE AD AD AD !!!!!");
-    console.log("AD DELETE AD AD AD !!!!!");
-    console.log("AD DELETE AD AD AD !!!!!");
-    console.log("AD DELETE AD AD AD !!!!!");
-    console.log("AD DELETE AD AD AD !!!!!");
-    console.log("AD DELETE AD AD AD !!!!!");
     // var body = '';
-    console.log("Delete item from cart: for custId " + req.url + ' ' +
-        req.params.id.toString());
-    console.log("delete here ");
-
-    console.table(c);
-
-
-
 
 
     res.send(' ');
